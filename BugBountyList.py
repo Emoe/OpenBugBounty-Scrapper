@@ -53,7 +53,7 @@ for url in urls:
     print(url)
     browser.get(url)
     time.sleep(2)
-    table = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div[1]/table/tbody/tr/td/form/table[1]")
+    table = browser.find_element_by_xpath("/html/body/div[1]/div[3]/div[1]/table/tbody/tr/td/form/table[1]/tbody")
     elements = table.find_elements_by_tag_name("td")
     for elem in elements:
         domains.append(clean_URL(elem.get_attribute("innerText")))
