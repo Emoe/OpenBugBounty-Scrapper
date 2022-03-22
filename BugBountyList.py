@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import json
 import time
 import sys
@@ -42,19 +43,18 @@ for i in range(1, max_legth+1):
     print("Dump Page - {}".format(str(i)))
     browser.get(baseURL.format(str(i)))
 
-    elements = browser.find_elements_by_class_name("cell1")
-    for elem in elements:
-        url = elem.find_element_by_tag_name("a")
+    table = browser.find_element(by=By.ID, value="bugbounty-list")
+    elements = table.find_elements(by=By.TAG_NAME, value="a")
+    for url in elements:
         urlText = url.get_attribute("href")
         if "/bugbounty/" in urlText: 
             urls.append(urlText)
 
 for url in urls:
-    print(url)
     browser.get(url)
     time.sleep(2)
-    table = browser.find_element_by_xpath("/html/body/div[2]/div[3]/div[1]/table/tbody/tr/td/form/table[1]")
-    elements = table.find_elements_by_tag_name("td")
+    table = browser.find_element(by=By.CLASS_NAME, value="wishlist")
+    elements = table.find_elements(by=By.TAG_NAME, value="td")
     for elem in elements:
         domains.append(clean_URL(elem.get_attribute("innerText")))
 print("Scan Done")
